@@ -1,5 +1,7 @@
 package ru.hogwarts.school.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -20,6 +22,11 @@ public class Avatar {
 
     @OneToOne
     private Student student;
+
+    @Autowired
+    public Avatar() {
+
+    }
 
     public Long getId() {
         return id;

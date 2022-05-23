@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
@@ -12,6 +13,8 @@ import java.util.Collection;
 @RequestMapping("faculty")
 
 public class FacultyController {
+
+    @Autowired
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
@@ -24,7 +27,7 @@ public class FacultyController {
         return ResponseEntity.ok(createdFaculty);
     }
 
-    @GetMapping("{facultyId}")
+    @GetMapping("/find/{facultyId}")
     public ResponseEntity getFaculty(@PathVariable Long facultyId) {
         Faculty faculty = facultyService.getFacultyById(facultyId);
         if(faculty == null) {
@@ -42,14 +45,14 @@ public class FacultyController {
         return ResponseEntity.ok(updatedFaculty);
     }
 
-    @DeleteMapping("{facultyId}")
+    @DeleteMapping("/remove/{facultyId}")
     public ResponseEntity deleteFaculty(@PathVariable Long facultyId) {
         facultyService.deleteFaculty(facultyId);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/color/{color}")
-    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@PathVariable String color) {
+    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@PathVariable("color") String color) {
         return ResponseEntity.ok(facultyService.getFacultiesByColor(color));
     }
 

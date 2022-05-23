@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
@@ -11,6 +12,7 @@ import java.util.Collection;
 @RequestMapping("student")
 
 public class StudentController {
+    @Autowired
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -49,17 +51,17 @@ public class StudentController {
 
     @GetMapping("/age/{age}")
     public ResponseEntity<Collection<Student>> getStudentsByAge(@PathVariable int age) {
-        return ResponseEntity.ok(studentService.getStudentsByAge(age));
+        return ResponseEntity.ok(studentService.findByAge(age));
     }
 
     @GetMapping()
     public ResponseEntity<Collection<Student>> getStudentsByAgeBetweenMinAndMax(@RequestParam int minAge,
                                                                                 @RequestParam int maxAge) {
-        return ResponseEntity.ok(studentService.getStudentsByAgeBetweenMinAndMax(minAge, maxAge));
+        return ResponseEntity.ok(studentService.findStudentByAgeBetween(minAge, maxAge));
     }
 
     @GetMapping("/faculty/{faculty_id}") //Получение студентов данного факультета
     public ResponseEntity<Collection<Student>> getStudentsByFacultyId(@PathVariable Long faculty_id) {
-        return ResponseEntity.ok(studentService.getStudentsByFacultyId(faculty_id));
+        return ResponseEntity.ok(studentService.findStudentByFacultyId(faculty_id));
     }
 }

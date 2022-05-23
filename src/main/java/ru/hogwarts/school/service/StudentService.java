@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
+import javax.persistence.OneToMany;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -19,29 +21,26 @@ public class StudentService {
         studentRepository.save(student);
         return student;
     }
-
     public Student getStudentById(Long studentId) {
         return studentRepository.findById(studentId).get();
     }
-
     public Student updateStudent(Long studentId, Student student) {
         studentRepository.save(student);
         return student;
     }
-
     public void deleteStudent(Long studentId) {
         studentRepository.deleteById(studentId);
     }
-
-    public Collection<Student> getStudentsByAge(int age) {
+    public Collection<Student> findByAge(int age) {
         return studentRepository.findByAge(age);
     }
 
-    public Collection<Student> getStudentsByAgeBetweenMinAndMax(int minAge, int maxAge) {
+    public Collection<Student> findStudentByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findStudentByAgeBetween(minAge, maxAge);
     }
 
-    public Collection<Student> getStudentsByFacultyId(Long faculty_id) {
+    public Collection<Student> findStudentByFacultyId(Long faculty_id) {
         return studentRepository.findStudentByFacultyId(faculty_id);
     }
+
 }
