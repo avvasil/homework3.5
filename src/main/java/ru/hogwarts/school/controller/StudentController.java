@@ -1,6 +1,5 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
@@ -9,10 +8,10 @@ import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("student")
+@RequestMapping("/student")
 
 public class StudentController {
-    @Autowired
+
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -34,7 +33,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PutMapping()
+    @PutMapping("/update/")
     public ResponseEntity updateStudent(@RequestBody Student student) {
         Student updatedStudent = studentService.updateStudent(student.getId(), student);
         if (student == null) {
@@ -43,7 +42,7 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
-    @DeleteMapping("{studentId}")
+    @DeleteMapping("/remove/{studentId}")
     public ResponseEntity deleteStudent(@PathVariable Long studentId) {
         studentService.deleteStudent(studentId);
         return ResponseEntity.ok().build();
@@ -63,5 +62,10 @@ public class StudentController {
     @GetMapping("/faculty/{faculty_id}") //Получение студентов данного факультета
     public ResponseEntity<Collection<Student>> getStudentsByFacultyId(@PathVariable Long faculty_id) {
         return ResponseEntity.ok(studentService.findStudentByFacultyId(faculty_id));
+    }
+
+    @GetMapping("/student/{name}") //Получение факультета студента
+    public ResponseEntity findFacultyByStudentName(@PathVariable String name) {
+        return ResponseEntity.ok(studentService.findFacultyByStudentName(name));
     }
 }

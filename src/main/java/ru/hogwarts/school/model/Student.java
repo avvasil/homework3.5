@@ -1,7 +1,5 @@
 package ru.hogwarts.school.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -19,15 +17,7 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    public Student(Long id, String name, int age, Faculty faculty) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.faculty = faculty;
-    }
-
     public Student() {
-
     }
 
     public Faculty getFaculty() {
@@ -67,12 +57,12 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(faculty, student.faculty);
+        return id.equals(student.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, faculty);
+        return Objects.hash(id);
     }
 
     @Override

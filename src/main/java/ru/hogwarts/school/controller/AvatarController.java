@@ -18,10 +18,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @RestController
-@RequestMapping("avatar")
+@RequestMapping("/avatar")
 public class AvatarController {
 
-    @Autowired
     private final AvatarService avatarService;
 
     public AvatarController(AvatarService avatarService) {
@@ -59,5 +58,4 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
-
 }
