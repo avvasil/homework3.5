@@ -8,9 +8,10 @@ import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("student")
+@RequestMapping("/student")
 
 public class StudentController {
+
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -32,7 +33,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PutMapping()
+    @PutMapping("/update/")
     public ResponseEntity updateStudent(@RequestBody Student student) {
         Student updatedStudent = studentService.updateStudent(student.getId(), student);
         if (student == null) {
@@ -41,7 +42,7 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
-    @DeleteMapping("{studentId}")
+    @DeleteMapping("/remove/{studentId}")
     public ResponseEntity deleteStudent(@PathVariable Long studentId) {
         studentService.deleteStudent(studentId);
         return ResponseEntity.ok().build();
@@ -49,17 +50,22 @@ public class StudentController {
 
     @GetMapping("/age/{age}")
     public ResponseEntity<Collection<Student>> getStudentsByAge(@PathVariable int age) {
-        return ResponseEntity.ok(studentService.getStudentsByAge(age));
+        return ResponseEntity.ok(studentService.findByAge(age));
     }
 
     @GetMapping()
     public ResponseEntity<Collection<Student>> getStudentsByAgeBetweenMinAndMax(@RequestParam int minAge,
                                                                                 @RequestParam int maxAge) {
-        return ResponseEntity.ok(studentService.getStudentsByAgeBetweenMinAndMax(minAge, maxAge));
+        return ResponseEntity.ok(studentService.findStudentByAgeBetween(minAge, maxAge));
     }
 
     @GetMapping("/faculty/{faculty_id}") //Получение студентов данного факультета
     public ResponseEntity<Collection<Student>> getStudentsByFacultyId(@PathVariable Long faculty_id) {
-        return ResponseEntity.ok(studentService.getStudentsByFacultyId(faculty_id));
+        return ResponseEntity.ok(studentService.findStudentByFacultyId(faculty_id));
+    }
+
+    @GetMapping("/student/{name}") //Получение факультета студента
+    public ResponseEntity findFacultyByStudentName(@PathVariable String name) {
+        return ResponseEntity.ok(studentService.findFacultyByStudentName(name));
     }
 }

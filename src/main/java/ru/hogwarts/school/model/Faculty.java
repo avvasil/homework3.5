@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Faculty {
@@ -21,7 +22,6 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private Collection<Student> students;
 
-    @Autowired
     public Faculty() {
 
     }
@@ -48,5 +48,28 @@ public class Faculty {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Faculty faculty = (Faculty) o;
+        return id.equals(faculty.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", students=" + students +
+                '}';
     }
 }

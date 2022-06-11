@@ -42,7 +42,4 @@ public class FacultyService {
         return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 
-    public Long getFacultyByStudentsIsContaining(Student student) {
-        return facultyRepository.findFacultyByStudentsIsContaining(student);
-    }
 }

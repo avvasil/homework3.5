@@ -1,10 +1,15 @@
 package ru.hogwarts.school.service;
 
+import com.zaxxer.hikari.util.ClockSource;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -33,15 +38,22 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    public Collection<Student> getStudentsByAge(int age) {
+    public Collection<Student> findByAge(int age) {
         return studentRepository.findByAge(age);
     }
 
-    public Collection<Student> getStudentsByAgeBetweenMinAndMax(int minAge, int maxAge) {
+    public Collection<Student> findStudentByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findStudentByAgeBetween(minAge, maxAge);
     }
 
-    public Collection<Student> getStudentsByFacultyId(Long faculty_id) {
+    public Collection<Student> findStudentByFacultyId(Long faculty_id) {
         return studentRepository.findStudentByFacultyId(faculty_id);
     }
+
+    public Faculty findFacultyByStudentName(String name) {//Поиск факультета по имени студента
+        return studentRepository.findAll().stream()
+                .filter(s -> Objects.equals(s.getName(), name))
+                .map(Student::getFaculty)
+                .findFirst().orElseThrow();
+        }
 }
