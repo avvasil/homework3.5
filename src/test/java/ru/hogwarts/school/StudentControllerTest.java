@@ -36,13 +36,13 @@ public class StudentControllerTest {
         Student student1 = new Student();
         Faculty faculty = new Faculty();
 
-        Long studentId = null;
-        String studentName = "Bobby";
-        int studentAge = 45;
-
         Long facultyId = 3L;
         String facultyName = "Ravenclaw";
         String facultyColor = "Blue";
+
+        Long studentId = (55L);
+        String studentName = "Bobby";
+        int studentAge = 45;
 
         student1.setId(studentId);
         student1.setName(studentName);
@@ -56,7 +56,7 @@ public class StudentControllerTest {
         Assertions
                 .assertThat(this.restTemplate.postForObject
                         ("http://localhost:" + port + "/student", student1, String.class))
-                .contains("name", "Bobby");
+                .contains("name", studentName);
     }
 
     @Test
@@ -70,6 +70,27 @@ public class StudentControllerTest {
 
     @Test
     public void testGetStudentByAge() throws Exception {
+
+        Student student1 = new Student();
+        Faculty faculty = new Faculty();
+
+        Long facultyId = 3L;
+        String facultyName = "Ravenclaw";
+        String facultyColor = "Blue";
+
+        Long studentId = (55L);
+        String studentName = "Bobby";
+        int studentAge = 45;
+
+        student1.setId(studentId);
+        student1.setName(studentName);
+        student1.setAge(studentAge);
+        student1.setFaculty(faculty);
+
+        faculty.setId(facultyId);
+        faculty.setName(facultyName);
+        faculty.setColor(facultyColor);
+
 
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/age/45", String.class))
@@ -102,50 +123,5 @@ public class StudentControllerTest {
                 .contains("name", "Ravenclaw");
     }
 
-//    @Test
-//    public void testUpdateStudent() throws Exception {
-//
-//        Student student1 = new Student();
-//        Student student2 = new Student();
-//        final long id = 1;
-//        final String name1 = "Bob";
-//        final String name2 = "Ivan";
-//        final int age1 = 23;
-//        final int age2 = 78;
-//
-//        Assertions
-//                .assertThat(this.restTemplate.put("http://localhost:" + port + "/student/update/", 16, student2))
-//                .is
-//
-//    }
-//
-//    @Test
-//    public void testDeleteStudent() throws Exception {
-//
-//        Student student1 = new Student();
-//        Faculty faculty = new Faculty();
-//
-//        Long studentId = null;
-//        String studentName = "Bobby";
-//        int studentAge = 45;
-//
-//        Long facultyId = 3L;
-//        String facultyName = "Ravenclaw";
-//        String facultyColor = "Blue";
-//
-//        student1.setId(studentId);
-//        student1.setName(studentName);
-//        student1.setAge(studentAge);
-//        student1.setFaculty(faculty);
-//
-//        faculty.setId(facultyId);
-//        faculty.setName(facultyName);
-//        faculty.setColor(facultyColor);
-//
-//        Assertions
-//                .assertThat(this.restTemplate.delete
-//                        ("http://localhost:" + port + "/remove/16"))
-//                .isNull();
-//    }
 
 }
